@@ -1,5 +1,7 @@
 $("#search-btn").on("click",function(){
+    
 var city = $(this).siblings(".form-control").val();
+getCity(city);
 var key = "cities"
 var existCity = localStorage.getItem(key);
 if (existCity===null){
@@ -15,5 +17,15 @@ cityArr.push(city);
 localStorage.setItem(key,JSON.stringify(cityArr));
 }
 });
-localStorage.getItem(key,)
+// localStorage.getItem(key,);
 
+function getCity(city){
+
+var requestUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=7c352849c8e0a97299331906dbac363a`
+
+fetch (requestUrl)
+
+.then(function(response){
+
+console.log(response.json())
+})}
