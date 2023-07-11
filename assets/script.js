@@ -33,7 +33,13 @@ var requestUrl= `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid
 fetch (requestUrl)
 
 .then(function(response){
-
+var dateGiven=document.querySelectorAll(".date");
+var cityGiven=document.querySelectorAll(".city-name");
+var iconGiven=document.querySelectorAll(".emoji");
+var tempGiven=document.querySelectorAll("temp");
+var humidGiven=document.querySelectorAll("humidity");
+var windGiven=document.querySelectorAll("wind-speed");
+ dateGiven
 console.log(response.json())
-
+console.log($(this))
 })}
