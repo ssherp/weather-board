@@ -1,9 +1,3 @@
-
-
-
-
-
-
 $("#search-btn").on("click",function(){
     
 var city = $(this).siblings(".form-control").val();
@@ -32,14 +26,20 @@ var requestUrl= `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid
 
 fetch (requestUrl)
 
+
 .then(function(response){
-var dateGiven=document.querySelectorAll(".date");
-var cityGiven=document.querySelectorAll(".city-name");
-var iconGiven=document.querySelectorAll(".emoji");
-var tempGiven=document.querySelectorAll("temp");
-var humidGiven=document.querySelectorAll("humidity");
-var windGiven=document.querySelectorAll("wind-speed");
- dateGiven
-console.log(response.json())
-console.log($(this))
+    return response.json()
+})
+
+.then(function(data){
+
+var dateCGiven=document.querySelector(".current-date");
+var cityCGiven=document.querySelector(".current-city-name");
+var iconCGiven=document.querySelector(".current-emoji");
+var tempCGiven=document.querySelector(".current-temp");
+var humidCGiven=document.querySelector(".current-humidity");
+var windCGiven=document.querySelector(".current-wind-speed");
+ dateCGiven.textContent=data.dt
+ 
+console.log(data)
 })}
