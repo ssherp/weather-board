@@ -6,6 +6,7 @@ $("#search-btn").on("click", function () {
     var existCity = localStorage.getItem(key);
     if (existCity === null) {
         localStorage.setItem(key, JSON.stringify([city]))
+
     }
     else {
 
@@ -26,7 +27,6 @@ function getCity(city) {
 
     fetch(requestUrl)
 
-
         .then(function (response) {
             return response.json()
         })
@@ -40,25 +40,56 @@ function getCity(city) {
             var humidCGiven = document.querySelector(".current-humidity");
             var windCGiven = document.querySelector(".current-wind-speed");
 
-            var normalTime = dayjs.unix(data.dt).format("MMM-DD, YYYY");
+            var normalTime = dayjs.unix(data.dt).format("MMM-DD,YYYY");
 
             dateCGiven.textContent = normalTime;
+            cityCGiven.textContent = data.name;
+            iconCGiven.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
+            tempCGiven.textContent = data.main.temp;
+            humidCGiven.textContent = data.main.humidity;
+            windCGiven.textContent = data.wind.speed;
+
+            // console.log(data);
+
+            latCord = data.coord.lat;
+            lonCord = data.coord.lon;
+
+            // console.log(latCord, lonCord);
+            get5Day(latCord, lonCord);
+        })
+
+}
+function get5Day(latCord, lonCord) {
+    var requestUrl = `http://api.openweathermap.org/data/2.5/forecast?lat=${latCord}&lon=${lonCord}&appid=7c352849c8e0a97299331906dbac363a&units=metric`
+
+    fetch(requestUrl)
+
+        .then(function(response){
+            return response.json()
+        })
+
+        .then(function(data){
+            var allDates= document.querySelectorAll(".Dates");
+            var allIcons= document.querySelectorAll(".emojis");
+            var allWinds= document.querySelectorAll(".winds");
+            var allHumidity=document.querySelectorAll(".humidity");
+            var allTemp= document.querySelectorAll(".temps");
+            for (var i= 0; i < allDates.length; i++){
+            allDates[i].textContent=dayjs(data.list[0].dt_text).format("MMM-D, YYYY");
+                
+            }
+
 
             console.log(data)
-
-            var lat
-          var long
-        
-        
-        get5Day(lat,long)
         })
 
 
-}
-
-
-function get5Day(lat, long) {
-var requestUrl=//lat long
 
 
 }
+
+
+
+
+
+//event.target get the text content
