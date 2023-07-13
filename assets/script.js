@@ -60,7 +60,7 @@ function getCity(city) {
 
 }
 function get5Day(latCord, lonCord) {
-    var requestUrl = `http://api.openweathermap.org/data/2.5/forecast?lat=${latCord}&lon=${lonCord}&appid=7c352849c8e0a97299331906dbac363a&units=metric`
+    var requestUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat='+latCord+'&lon='+lonCord+'&appid=7c352849c8e0a97299331906dbac363a&units=metric'
 
     fetch(requestUrl)
 
