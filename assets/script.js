@@ -23,7 +23,7 @@ $("#search-btn").on("click", function () {
 function getCity(city) {
 
     // var requestUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=7c352849c8e0a97299331906dbac363a`
-    var requestUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=7c352849c8e0a97299331906dbac363a&units=metric`
+    var requestUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=7c352849c8e0a97299331906dbac363a&units=imperial`
 
     fetch(requestUrl)
 
@@ -60,7 +60,7 @@ function getCity(city) {
 
     }
 function get5Day(latCord, lonCord) {
-    var requestUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat='+latCord+'&lon='+lonCord+'&appid=7c352849c8e0a97299331906dbac363a&units=metric'
+    var requestUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat='+latCord+'&lon='+lonCord+'&appid=7c352849c8e0a97299331906dbac363a&units=imperial'
 
     fetch(requestUrl)
 
@@ -72,16 +72,16 @@ function get5Day(latCord, lonCord) {
             var allDates= document.querySelectorAll(".Dates");
             var allIcons= document.querySelectorAll(".emojis");
             var allWinds= document.querySelectorAll(".winds");
-            var allHumidity=document.querySelectorAll(".humidity");
+            var allHumidity=document.querySelectorAll(".humidities");
             var allTemp= document.querySelectorAll(".temps");
             
             var dateCount=0
             for (var i= 0; i < allDates.length;i++){
             allDates[i].textContent=dayjs(data.list[dateCount].dt_txt).format("MMM-D, YYYY");
             allIcons[i].src = `https://openweathermap.org/img/wn/${data.list[dateCount].weather[0].icon}.png`;
-            // allWinds[i].textContent=data.list[dateCount].wind.speed;
-            // allHumidity[i].textContent=data.list[dateCount].main.humidity;
-            // allTemp[i].textContent=data.list[dateCount].main.temp;
+            allWinds[i].textContent=data.list[dateCount].wind.speed;
+            allHumidity[i].textContent=data.list[dateCount].main.humidity;
+            allTemp[i].textContent=data.list[dateCount].main.temp;
  
             dateCount+=8;
           console.log(allDates)
