@@ -58,7 +58,7 @@ function getCity(city) {
             get5Day(latCord, lonCord);
         })
 
-}
+    }
 function get5Day(latCord, lonCord) {
     var requestUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat='+latCord+'&lon='+lonCord+'&appid=7c352849c8e0a97299331906dbac363a&units=metric'
 
@@ -74,13 +74,21 @@ function get5Day(latCord, lonCord) {
             var allWinds= document.querySelectorAll(".winds");
             var allHumidity=document.querySelectorAll(".humidity");
             var allTemp= document.querySelectorAll(".temps");
-            for (var i= 0; i < allDates.length; i++){
-            allDates[i].textContent=dayjs(data.list[0].dt_text).format("MMM-D, YYYY");
-                
-            }
+            
+            var dateCount=0
+            for (var i= 0; i < allDates.length;i++){
+            allDates[i].textContent=dayjs(data.list[dateCount].dt_txt).format("MMM-D, YYYY");
+            allIcons[i].src = `https://openweathermap.org/img/wn/${data.list[dateCount].weather[0].icon}.png`;
+            // allWinds[i].textContent=data.list[dateCount].wind.speed;
+            // allHumidity[i].textContent=data.list[dateCount].main.humidity;
+            // allTemp[i].textContent=data.list[dateCount].main.temp;
+ 
+            dateCount+=8;
+          console.log(allDates)
+        }
 
 
-            console.log(data)
+            
         })
 
 
