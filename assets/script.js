@@ -1,8 +1,10 @@
+var key="cities"
+
 $("#search-btn").on("click", function () {
 
     var city = $(this).siblings(".form-control").val();
     getCity(city);
-    var key = "cities"
+    // var key = "cities"
     var existCity = localStorage.getItem(key);
     if (existCity === null) {
         localStorage.setItem(key, JSON.stringify([city]))
@@ -15,14 +17,22 @@ $("#search-btn").on("click", function () {
             return;
         }
         cityArr.push(city);
-        localStorage.setItem(key, JSON.stringify(cityArr));
+       localStorage.setItem(key,JSON.stringify(cityArr));
+    
     }
 });
-// localStorage.getItem(key,);
+function displayHistory() {
+  var searchHistory = JSON.parse(localStorage.getItem(key));
+  var listEls = document.querySelectorAll(".list");
 
+  for (var i = 0; i < searchHistory.length; i++) {
+    var city = searchHistory[i];
+    listEls[i].textContent = city;
+  }
+}
 function getCity(city) {
 
-    // var requestUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=7c352849c8e0a97299331906dbac363a`
+    
     var requestUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=7c352849c8e0a97299331906dbac363a&units=imperial`
 
     fetch(requestUrl)
@@ -84,7 +94,7 @@ function get5Day(latCord, lonCord) {
             allTemp[i].textContent=data.list[dateCount].main.temp;
  
             dateCount+=8;
-          console.log(allDates)
+        
         }
 
 
