@@ -20,6 +20,7 @@ $("#search-btn").on("click", function () {
        localStorage.setItem(key,JSON.stringify(cityArr));
     
     }
+    displayHistory()
 });
 function displayHistory() {
   var searchHistory = JSON.parse(localStorage.getItem(key));
