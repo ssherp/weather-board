@@ -3,7 +3,7 @@
 ## Description
 
 This Weather Dashboard is a web page designed to display weather information for a specific city. It allows users to search for a city by name and retrieve the current weather conditions as well as a 5-day forecast. The page is built using HTML, CSS, and JavaScript, with the help of the Bootstrap framework.
-<br>[visit the Deployed site](https://github.com/ssherp/weather-board/)
+<br>[visit the Deployed site](https://ssherp.github.io/weather-board/)
 
 ## Features
 
