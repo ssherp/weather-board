@@ -1,5 +1,8 @@
-var key="cities"
-
+var key = "cities"
+displayHistory()
+$(".history-btn").on("click", function () {
+    getCity($(this).text())
+})
 $("#search-btn").on("click", function () {
 
     var city = $(this).siblings(".form-control").val();
@@ -8,7 +11,6 @@ $("#search-btn").on("click", function () {
     var existCity = localStorage.getItem(key);
     if (existCity === null) {
         localStorage.setItem(key, JSON.stringify([city]))
-
     }
     else {
 
@@ -16,25 +18,30 @@ $("#search-btn").on("click", function () {
         if (cityArr.indexOf(city) != -1) {
             return;
         }
-        cityArr.push(city);
-       localStorage.setItem(key,JSON.stringify(cityArr));
-    
+        if (cityArr.length == 6) {
+            cityArr.pop()
+        }
+        cityArr.unshift(city);
+
+        localStorage.setItem(key, JSON.stringify(cityArr));
     }
     displayHistory()
 });
 function displayHistory() {
-  var searchHistory = JSON.parse(localStorage.getItem(key));
-  var listEls = document.querySelectorAll(".list");
+    var searchHistory = JSON.parse(localStorage.getItem(key)) || [];
+    var btnEls = document.querySelectorAll(".history-btn");
 
-  for (var i = 0; i < searchHistory.length; i++) {
-    var city = searchHistory[i];
-    listEls[i].textContent = city;
-  }
+    for (var i = 0; i < searchHistory.length; i++) {
+        var city = searchHistory[i];
+        btnEls[i].textContent = city;
+        btnEls[i].classList.remove("hidden");
+    }
+
 }
-function getCity(city) {
+function getCity(location) {
 
-    
-    var requestUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=7c352849c8e0a97299331906dbac363a&units=imperial`
+
+    var requestUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=7c352849c8e0a97299331906dbac363a&units=imperial`
 
     fetch(requestUrl)
 
@@ -69,37 +76,37 @@ function getCity(city) {
             get5Day(latCord, lonCord);
         })
 
-    }
+}
 function get5Day(latCord, lonCord) {
-    var requestUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat='+latCord+'&lon='+lonCord+'&appid=7c352849c8e0a97299331906dbac363a&units=imperial'
+    var requestUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + latCord + '&lon=' + lonCord + '&appid=7c352849c8e0a97299331906dbac363a&units=imperial'
 
     fetch(requestUrl)
 
-        .then(function(response){
+        .then(function (response) {
             return response.json()
         })
 
-        .then(function(data){
-            var allDates= document.querySelectorAll(".Dates");
-            var allIcons= document.querySelectorAll(".emojis");
-            var allWinds= document.querySelectorAll(".winds");
-            var allHumidity=document.querySelectorAll(".humidities");
-            var allTemp= document.querySelectorAll(".temps");
-            
-            var dateCount=0
-            for (var i= 0; i < allDates.length;i++){
-            allDates[i].textContent=dayjs(data.list[dateCount].dt_txt).format("MMM-D, YYYY");
-            allIcons[i].src = `https://openweathermap.org/img/wn/${data.list[dateCount].weather[0].icon}.png`;
-            allWinds[i].textContent=data.list[dateCount].wind.speed;
-            allHumidity[i].textContent=data.list[dateCount].main.humidity;
-            allTemp[i].textContent=data.list[dateCount].main.temp;
- 
-            dateCount+=8;
-        
-        }
+        .then(function (data) {
+            var allDates = document.querySelectorAll(".Dates");
+            var allIcons = document.querySelectorAll(".emojis");
+            var allWinds = document.querySelectorAll(".winds");
+            var allHumidity = document.querySelectorAll(".humidities");
+            var allTemp = document.querySelectorAll(".temps");
+
+            var dateCount = 0
+            for (var i = 0; i < allDates.length; i++) {
+                allDates[i].textContent = dayjs(data.list[dateCount].dt_txt).format("MMM-D, YYYY");
+                allIcons[i].src = `https://openweathermap.org/img/wn/${data.list[dateCount].weather[0].icon}.png`;
+                allWinds[i].textContent = data.list[dateCount].wind.speed;
+                allHumidity[i].textContent = data.list[dateCount].main.humidity;
+                allTemp[i].textContent = data.list[dateCount].main.temp;
+
+                dateCount += 8;
+
+            }
 
 
-            
+
         })
 
 
@@ -111,4 +118,3 @@ function get5Day(latCord, lonCord) {
 
 
 
-//event.target get the text content
